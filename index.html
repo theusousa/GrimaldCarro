@@ -10,9 +10,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,500;0,600;1,700;1,800&family=Barlow:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    // Ativa o intro antes da pintura (sem JS, a página abre direto)
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('is-loading');
+  </script>
   <script src="script.js" defer></script>
 </head>
 <body>
+
+<!-- INTRO 3D -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-scene">
+    <div class="gyro">
+      <span class="ring r1"></span>
+      <span class="ring r2"></span>
+      <span class="ring r3"></span>
+    </div>
+    <span class="core"></span>
+  </div>
+  <div class="intro-brand"><span class="gold">G</span><span class="silver">RIMALDI</span></div>
+  <div class="intro-sub">ESTÉTICA AUTOMOTIVA</div>
+  <div class="intro-bar"><span id="introBar"></span></div>
+  <div class="intro-pct" id="introPct">0%</div>
+</div>
 
 <!-- NAV -->
 <header class="site-header" id="header">
