@@ -62,6 +62,33 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(function (el) { revealObs.observe(el); });
 
+    // Estúdio: pausa as luzes quando o topo sai da tela
+    var hero = document.getElementById('topo');
+    new IntersectionObserver(function (entries) {
+      hero.classList.toggle('paused', !entries[0].isIntersecting);
+    }).observe(hero);
+
+    // Logo 3D acompanha o mouse (só em telas com mouse)
+    var stage = document.getElementById('stage3d');
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      var pending = null;
+      hero.addEventListener('mousemove', function (e) {
+        var r = hero.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        if (pending) return;
+        pending = requestAnimationFrame(function () {
+          stage.style.setProperty('--ry', (x * 16).toFixed(2) + 'deg');
+          stage.style.setProperty('--rx', (-y * 10).toFixed(2) + 'deg');
+          pending = null;
+        });
+      });
+      hero.addEventListener('mouseleave', function () {
+        stage.style.setProperty('--ry', '0deg');
+        stage.style.setProperty('--rx', '0deg');
+      });
+    }
+
     // Destaca o link do menu da seção atual
     var links = {};
     nav.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
