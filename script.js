@@ -6,39 +6,6 @@
   var toggle = document.getElementById('menuToggle');
   var nav = document.getElementById('mainNav');
 
-  // Intro 3D: contagem 0→100% que termina quando a página carregou (mín. ~2s, máx. ~5s)
-  var root = document.documentElement;
-  if (root.classList.contains('is-loading')) {
-    var intro = document.getElementById('intro');
-    var bar = document.getElementById('introBar');
-    var pct = document.getElementById('introPct');
-    var start = performance.now();
-    var MIN = 2000, MAX = 5000;
-    var loaded = false, shown = 0, finished = false;
-    window.addEventListener('load', function () { loaded = true; });
-
-    var tick = function (now) {
-      var t = now - start;
-      // Avança sozinho até 90%; só passa disso quando a página terminou de carregar
-      var target = Math.min(t / MIN, 1) * ((loaded || t > MAX) ? 100 : 90);
-      shown += (target - shown) * 0.12;
-      if (target === 100 && shown > 99.5) shown = 100;
-      bar.style.transform = 'scaleX(' + (shown / 100) + ')';
-      pct.textContent = Math.round(shown) + '%';
-      if (shown === 100) return finish();
-      requestAnimationFrame(tick);
-    };
-    var finish = function () {
-      if (finished) return;
-      finished = true;
-      intro.classList.add('leaving');
-      root.classList.remove('is-loading');
-      setTimeout(function () { intro.remove(); }, 1100);
-    };
-    requestAnimationFrame(tick);
-    setTimeout(finish, MAX + 1500); // garantia caso a aba fique em segundo plano
-  }
-
   document.addEventListener('DOMContentLoaded', function () {
     var year = document.getElementById('year');
     if (year) year.textContent = new Date().getFullYear();
